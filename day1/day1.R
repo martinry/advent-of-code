@@ -4,15 +4,12 @@
 library(data.table)
 library(magrittr)
 
-setwd(rstudioapi::getActiveDocumentContext()[["path"]] %>%
-  	sub(basename(.), "", .)) %>% cat("Work directory set to: ", ., sep = "\n")
-
 # Part 1
 
-res <- fread("input.txt")
+res <- fread("input.txt")$V1
 
-res <- data.table("Input" = res$V1,
-				  "Shifted" = c(NA, res$V1[-length(res$V1)]),
+res <- data.table("Input" = res,
+				  "Shifted" = c(NA, res[-length(res)]),
 				  "Increase" = NA)
 
 res$Increase <- res$Input > res$Shifted
